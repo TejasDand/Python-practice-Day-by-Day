@@ -1,25 +1,33 @@
-class Employee:
-
-    salary = 320
-    increment = 20
-
-    # This Calculates the updated salary using the current increment.
-    @property
-    def salaryAfterIncrement(self):
-
-        return (self.salary + self.salary * (self.increment/100))   
-        # 320 + 320 * (20/100) =>  320 + 320 * 0.2 =>  320 + 64 =>  384
-
+# Define a class to represent complex numbers
+class Complex:
     
-    # This Calculates the required increment % to reach a target salary.
-    @salaryAfterIncrement.setter
-    def salaryIncrement(self, salary):
+    def __init__(self, i, j):
+        # Constructor that initializes the real (i) and imaginary (j) parts
+        self.i = i
+        self.j = j
 
-        self.increment = ((salary/self.salary) - 1) * 100
-        # ((390.6 / 320) - 1) *100 =>   (1.220625 - 1)*100 =>   0.220625*100 =>     22.0625
+    def __add__(self, c2):
+        # Overload the '+' operator
+        # Adds two complex numbers: (a + bj) + (c + dj) = (a + c) + (b + d)j
+        return Complex(self.i + c2.i, self.j + c2.j)
+    
+    def __mul__(self, c2):
+        # Overload the '*' operator
+        # Formula: (a + bj) * (c + dj) = (ac - bd) + (ad + bc)j
+        real = self.i * c2.i - self.j * c2.j
+        imag = self.i * c2.j + self.j * c2.i
+        return Complex(real, imag)
 
+    def __str__(self):
+        # Define how the object is printed (string representation)
+        return f"{self.i} + {self.j}j"
 
-e = Employee()
-print(e.salaryAfterIncrement)   # 384.0
-e.salaryIncrement = 390.6
-print(e.increment)
+# Create two complex number objects
+c1 = Complex(1, 2)   # Represents 1 + 2j
+c2 = Complex(3, 4)   # Represents 3 + 4j
+
+# Add the complex numbers using overloaded '+' operator
+print("Addition:", c1 + c2)     # Output: 4 + 6j
+
+# Multiply the complex numbers using overloaded '*' operator
+print("Multiplication:", c1 * c2)  # Output: (1×3 - 2×4) + (1×4 + 2×3)j => -5 + 10j
